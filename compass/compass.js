@@ -1,21 +1,21 @@
 var magnetometerDevice
 // micro:bit 磁力サービス
-const MAGNETOMETER_SERVICE = 'e95df2d8-251d-470a-a062-fa1922dfa9a8'
+const MAGNETOMETER_SERVICE_UUID = 'e95df2d8-251d-470a-a062-fa1922dfa9a8'
 // micro:bit 磁力データキャラクタリスティック
-const MAGNETOMETER_DATA = 'e95dfb11-251d-470a-a062-fa1922dfa9a8'
+const MAGNETOMETER_DATA_UUID = 'e95dfb11-251d-470a-a062-fa1922dfa9a8'
 // micro:bit 磁力取得間隔キャラクタリスティック
-const MAGNETOMETER_PERIOD = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
+const MAGNETOMETER_PERIOD_UUID = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
 // micro:bit 方角データキャラクタリスティック
-const MAGNETOMETER_BEARING = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
+const MAGNETOMETER_BEARING_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
 // コンパス読取りインターバル mS
 const INTERVAL = 250
 
-function connect() {
+function connect () {
   navigator.bluetooth.requestDevice({
     filters: [{
       namePrefix: 'BBC micro:bit'
     }],
-    optionalServices: [MAGNETOMETER_SERVICE]
+    optionalServices: [MAGNETOMETER_SERVICE_UUID]
   })
     .then(device => {
       magnetometerDevice = device
@@ -39,7 +39,7 @@ function disconnect () {
 }
 
 function findMagnetometerService (server) {
-  server.getPrimaryService(MAGNETOMETER_SERVICE)
+  server.getPrimaryService(MAGNETOMETER_SERVICE_UUID)
     .then(service => {
       findMagnetometerPeriodCharacteristic(service)
       findMagnetometerBearingCharacteristic(service)
@@ -50,7 +50,7 @@ function findMagnetometerService (server) {
 }
 
 function findMagnetometerPeriodCharacteristic (service) {
-  service.getCharacteristic(MAGNETOMETER_PERIOD)
+  service.getCharacteristic(MAGNETOMETER_PERIOD_UUID)
     .then(characteristic => {
       writeMagnetometerPeriodValue(characteristic)
     })
@@ -67,7 +67,7 @@ function writeMagnetometerPeriodValue (characteristic) {
 }
 
 function findMagnetometerBearingCharacteristic (service) {
-  service.getCharacteristic(MAGNETOMETER_BEARING)
+  service.getCharacteristic(MAGNETOMETER_BEARING_UUID)
     .then(characteristic => {
       startMagnetometerBearingNotification(characteristic)
     })
