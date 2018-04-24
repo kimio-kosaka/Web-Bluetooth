@@ -36,6 +36,7 @@ function disconnect () {
   if (!magnetometerDevice || !magnetometerDevice.gatt.connected) return
   magnetometerDevice.gatt.disconnect()
   alert('BLE接続を切断しました。')
+  document.js.x.value = ''
 }
 
 function findMagnetometerService (server) {
