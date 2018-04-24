@@ -8,7 +8,7 @@ const MAGNETOMETER_PERIOD_UUID = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
 // micro:bit 方角データキャラクタリスティック
 const MAGNETOMETER_BEARING_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
 // コンパス読取りインターバル mS
-const INTERVAL = 250
+const INTERVAL = 500
 
 function connect () {
   navigator.bluetooth.requestDevice({
