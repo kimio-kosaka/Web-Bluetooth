@@ -46,7 +46,6 @@ function disconnect () {
 function findMagnetometerPeriodCharacteristic (service) {
   service.getCharacteristic(MAGNETOMETER_PERIOD_UUID)
     .then(characteristic => {
-      // writeMagnetometerPeriodValue(characteristic)
       characteristic.writeValue(new Uint16Array([INTERVAL]))
         .catch(error => {
           console.log(error)
@@ -57,17 +56,9 @@ function findMagnetometerPeriodCharacteristic (service) {
     })
 }
 
-function writeMagnetometerPeriodValue (characteristic) {
-  characteristic.writeValue(new Uint16Array([INTERVAL]))
-    .catch(error => {
-      console.log(error)
-    })
-}
-
 function findMagnetometerBearingCharacteristic (service) {
   service.getCharacteristic(MAGNETOMETER_BEARING_UUID)
     .then(characteristic => {
-      // startMagnetometerBearingNotification(characteristic)
       characteristic.startNotifications()
         .then(char => {
           console.log('Compass:', char)
@@ -78,16 +69,6 @@ function findMagnetometerBearingCharacteristic (service) {
     })
     .catch(error => {
       console.log(error)
-    })
-}
-
-function startMagnetometerBearingNotification (characteristic) {
-  characteristic.startNotifications()
-    .then(char => {
-      console.log('Compass:', char)
-      alert('BLE接続が完了しました。')
-      characteristic.addEventListener('characteristicvaluechanged',
-        onMagnetometerBearingChanged)
     })
 }
 
