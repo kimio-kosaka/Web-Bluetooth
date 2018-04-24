@@ -10,6 +10,7 @@ const MAGNETOMETER_BEARING_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
 // コンパス読取りインターバル mS
 const INTERVAL = 250
 
+/*
 function connect () {
   navigator.bluetooth.requestDevice({
     filters: [{
@@ -25,6 +26,33 @@ function connect () {
     .then(server => {
       console.log('server', server)
       findMagnetometerService(server)
+    })
+    .catch(error => {
+      alert('BLE接続に失敗しました。もう一度試してみてください')
+      console.log(error)
+    })
+}
+*/
+
+function connect () {
+  navigator.bluetooth.requestDevice({
+    filters: [{
+      namePrefix: 'BBC micro:bit'
+    }],
+    optionalServices: [MAGNETOMETER_SERVICE_UUID]
+  })
+    .then(device => {
+      magnetometerDevice = device
+      console.log('device', device)
+      return device.gatt.connect()
+    })
+    .then(server => {
+      console.log('server', server)
+      server.getPrimaryService(MAGNETOMETER_SERVICE_UUID)
+        .then(service => {
+          findMagnetometerPeriodCharacteristic(service)
+          findMagnetometerBearingCharacteristic(service)
+        })
     })
     .catch(error => {
       alert('BLE接続に失敗しました。もう一度試してみてください')
