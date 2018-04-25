@@ -1,11 +1,11 @@
 /* define Parameters **************************************************/
 // BLEデバイス名接頭句
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
-// micro:bit 温度サービス
+// 温度センサーサービス
 const TEMPERATURE_SERVICE_UUID = 'e95d6100-251d-470a-a062-fa1922dfa9a8'
-// micro:bit 温度取得間隔キャラクタリスティック
+// 温度センサーデータ取得間隔キャラクタリスティック
 const TEMPERATURE_PERIOD_UUID = 'e95d1b25-251d-470a-a062-fa1922dfa9a8'
-// micro:bit 温度データキャラクタリスティック
+// 温度センサーデータキャラクタリスティック
 const TEMPERATURE_DATA_UUID = 'e95d9250-251d-470a-a062-fa1922dfa9a8'
 // Messages
 const MSG_CONNECTED = 'BLE接続が完了しました。'
