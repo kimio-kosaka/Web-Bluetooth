@@ -15,7 +15,7 @@ const CHARACTERISTIC_UUID = ACCELEROMETERDATA_CHARACTERISTIC_UUID
 // connected device value
 var connectDevice
 
-// discnnect process
+// disconnect process
 function disconnect () {
   if (!connectDevice || !connectDevice.gatt.connected) return
   connectDevice.gatt.disconnect()
@@ -56,6 +56,7 @@ function connect () {
     })
 }
 
+// start service event
 function startService (service, charUUID) {
   service.getCharacteristic(charUUID)
     .then(characteristic => {
