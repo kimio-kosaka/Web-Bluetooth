@@ -4,9 +4,9 @@ const     ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa
 const ACCELEROMETERDATA_CHARACTERISTIC_UUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 
 // Messages
-const CONNECTED = 'BLE接続が完了しました。'
-const CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
-const DISCONNECTED = 'BLE接続を切断しました。'
+const MSG_CONNECTED = 'BLE接続が完了しました。'
+const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
+const MSG_DISCONNECTED = 'BLE接続を切断しました。'
 
 // for connection process
 const SERVICE_UUID = ACCELEROMETERSERVICE_SERVICE_UUID
@@ -17,7 +17,7 @@ var connectDevice
 function disconnect () {
   if (!connectDevice || !connectDevice.gatt.connected) return
   connectDevice.gatt.disconnect()
-  alert(DISCONNECTED)
+  alert(MSG_DISCONNECTED)
   postDisconnect()
 }
 
@@ -50,7 +50,7 @@ function connect () {
     })
     .catch(error => {
       console.log(error)
-      alert(CONNECT_ERROR)
+      alert(MSG_CONNECT_ERROR)
     })
 }
 
@@ -59,7 +59,7 @@ function startService (service, charUUID) {
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
-          alert(CONNECTED)
+          alert(MSG_CONNECTED)
           characteristic.addEventListener('characteristicvaluechanged',
             // event is here
             onAccelerometerValueChanged)
@@ -68,7 +68,7 @@ function startService (service, charUUID) {
     })
     .catch(error => {
       console.log(error)
-      alert(CONNECT_ERROR)
+      alert(MSG_CONNECT_ERROR)
     })
 }
 
