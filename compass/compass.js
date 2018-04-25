@@ -9,7 +9,6 @@ const    MAGNETOMETER_DATA_UUID = 'e95dfb11-251d-470a-a062-fa1922dfa9a8'
 const  MAGNETOMETER_PERIOD_UUID = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
 // 磁気センサー方角データキャラクタリスティック
 const MAGNETOMETER_COMPASS_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
-
 // Messages
 const MSG_CONNECTED = 'BLE接続が完了しました。'
 const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
