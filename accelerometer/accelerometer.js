@@ -4,6 +4,7 @@ const     ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa
 const ACCELEROMETERDATA_CHARACTERISTIC_UUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 
 const SERVICE_UUID = ACCELEROMETERSERVICE_SERVICE_UUID
+const CHARACTERISTIC_UUID = ACCELEROMETERDATA_CHARACTERISTIC_UUID
 var ConnectDevice
 
 // discnnect process
@@ -33,7 +34,7 @@ function connect () {
       console.log('server', server)
       server.getPrimaryService(SERVICE_UUID)
         .then(service => {
-          startAccelerometer(service) // start Accelerometer
+          startService(service, CHARACTERISTIC_UUID) // start Accelerometer
         })
     })
     .catch(error => {
@@ -42,15 +43,16 @@ function connect () {
     })
 }
 
-function startAccelerometer (service) {
-  service.getCharacteristic(ACCELEROMETERDATA_CHARACTERISTIC_UUID)
+function startService (service, charUUID) {
+  service.getCharacteristic(charUUID)
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
-          console.log('Accelerometer:', char)
           alert('BLE接続が完了しました。')
           characteristic.addEventListener('characteristicvaluechanged',
+            // event is here
             onAccelerometerValueChanged)
+          console.log('Accelerometer:', char)
         })
     })
     .catch(error => {
