@@ -53,7 +53,7 @@ function connect () {
         .then(service => {
           // start service is here
           setPeriod(service, CHARACTERISTIC_UUID_1) // set interval timer
-          startService(service, CHARACTERISTIC_UUID_2) // start commpass
+          startService(service, CHARACTERISTIC_UUID_2) // start temperature event
         })
     })
     .catch(error => {
