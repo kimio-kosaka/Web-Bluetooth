@@ -17,7 +17,7 @@ const SERVICE_UUID = TEMPERATURE_SERVICE_UUID
 const CHARACTERISTIC_UUID_1 = TEMPERATURE_PERIOD_UUID
 const CHARACTERISTIC_UUID_2 = TEMPERATURE_DATA_UUID
 // コンパス読取りインターバル mS
-const INTERVAL = 1000
+const INTERVAL = 500
 // connected device value
 var connectDevice = null
 
@@ -98,5 +98,5 @@ function onTemperatureChanged (event) {
   let temperature = event.target.value.getUint8(0, true)
   // updateBearingValue(bearing)
   console.log('Temper.:' + temperature)
-  document.js.temperature.value = temperature
+  document.js.temperature.value = temperature + '`C'
 }
