@@ -1,4 +1,4 @@
-
+const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 // micro:bit BLE Accelerometer UUID
 const     ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
 const ACCELEROMETERDATA_CHARACTERISTIC_UUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -23,7 +23,7 @@ function disconnect () {
 function connect () {
   navigator.bluetooth.requestDevice({
     filters: [{
-      namePrefix: 'BBC micro:bit'
+      namePrefix: DEVICE_NAME_PREFIX
     }],
     optionalServices: [SERVICE_UUID]
   })
