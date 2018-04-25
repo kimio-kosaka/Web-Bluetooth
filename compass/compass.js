@@ -1,4 +1,4 @@
-var magnetometerDevice
+/* define Service UUID */
 // micro:bit 磁力サービス
 const MAGNETOMETER_SERVICE_UUID = 'e95df2d8-251d-470a-a062-fa1922dfa9a8'
 // micro:bit 磁力データキャラクタリスティック
@@ -6,28 +6,42 @@ const MAGNETOMETER_DATA_UUID = 'e95dfb11-251d-470a-a062-fa1922dfa9a8'
 // micro:bit 磁力取得間隔キャラクタリスティック
 const MAGNETOMETER_PERIOD_UUID = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
 // micro:bit 方角データキャラクタリスティック
-const MAGNETOMETER_BEARING_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
+const MAGNETOMETER_COMPASS_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
+
+// request connect service UUID
+const SERVICE_UUID = MAGNETOMETER_SERVICE_UUID
 // コンパス読取りインターバル mS
 const INTERVAL = 250
 
+var MagnetometerDevice
+
+// discnnect process
+function disconnect () {
+  if (!MagnetometerDevice || !MagnetometerDevice.gatt.connected) return
+  MagnetometerDevice.gatt.disconnect()
+  alert('BLE接続を切断しました。')
+  document.js.x.value = ''
+}
+
+// connect process
 function connect () {
   navigator.bluetooth.requestDevice({
     filters: [{
       namePrefix: 'BBC micro:bit'
     }],
-    optionalServices: [MAGNETOMETER_SERVICE_UUID]
+    optionalServices: [SERVICE_UUID]
   })
     .then(device => {
-      magnetometerDevice = device
+      MagnetometerDevice = device
       console.log('device', device)
       return device.gatt.connect()
     })
     .then(server => {
       console.log('server', server)
-      server.getPrimaryService(MAGNETOMETER_SERVICE_UUID)
+      server.getPrimaryService(SERVICE_UUID)
         .then(service => {
-          findMagnetometerPeriodCharacteristic(service)
-          findMagnetometerBearingCharacteristic(service)
+          setPeriod(service) // set interbval timer
+          startCompass(service) // start commpass
         })
     })
     .catch(error => {
@@ -36,14 +50,8 @@ function connect () {
     })
 }
 
-function disconnect () {
-  if (!magnetometerDevice || !magnetometerDevice.gatt.connected) return
-  magnetometerDevice.gatt.disconnect()
-  alert('BLE接続を切断しました。')
-  document.js.x.value = ''
-}
-
-function findMagnetometerPeriodCharacteristic (service) {
+// set interval time
+function setPeriod (service) {
   service.getCharacteristic(MAGNETOMETER_PERIOD_UUID)
     .then(characteristic => {
       characteristic.writeValue(new Uint16Array([INTERVAL]))
@@ -56,15 +64,16 @@ function findMagnetometerPeriodCharacteristic (service) {
     })
 }
 
-function findMagnetometerBearingCharacteristic (service) {
-  service.getCharacteristic(MAGNETOMETER_BEARING_UUID)
+// start Compass
+function startCompass (service) {
+  service.getCharacteristic(MAGNETOMETER_COMPASS_UUID)
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
           console.log('Compass:', char)
           alert('BLE接続が完了しました。')
           characteristic.addEventListener('characteristicvaluechanged',
-            onMagnetometerBearingChanged)
+            onCompassChanged)
         })
     })
     .catch(error => {
@@ -72,7 +81,8 @@ function findMagnetometerBearingCharacteristic (service) {
     })
 }
 
-function onMagnetometerBearingChanged (event) {
+// get and put Compass data
+function onCompassChanged (event) {
   let bearing = event.target.value.getUint16(0, true)
   // updateBearingValue(bearing)
   console.log('Heading:' + bearing)
