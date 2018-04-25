@@ -13,7 +13,10 @@ function disconnect () {
   if (!connectDevice || !connectDevice.gatt.connected) return
   connectDevice.gatt.disconnect()
   alert('BLE接続を切断しました。')
-  // post disconnect process
+  postDisconnect()
+}
+
+function postDisconnect () {
   document.js.x.value = ''
   document.js.y.value = ''
   document.js.z.value = ''
