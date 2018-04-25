@@ -20,7 +20,8 @@ function disconnect () {
   if (!ConnectDevice || !ConnectDevice.gatt.connected) return
   ConnectDevice.gatt.disconnect()
   alert('BLE接続を切断しました。')
-  document.js.x.value = ''
+  // post disconnect process is here
+  document.js.compass.value = ''
 }
 
 // connect process
@@ -40,6 +41,7 @@ function connect () {
       console.log('server', server)
       server.getPrimaryService(SERVICE_UUID)
         .then(service => {
+          // start service is here
           setPeriod(service) // set interbval timer
           startCompass(service) // start commpass
         })
@@ -86,5 +88,5 @@ function onCompassChanged (event) {
   let bearing = event.target.value.getUint16(0, true)
   // updateBearingValue(bearing)
   console.log('Heading:' + bearing)
-  document.js.x.value = bearing
+  document.js.compass.value = bearing
 }
