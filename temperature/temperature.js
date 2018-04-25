@@ -21,7 +21,7 @@ const INTERVAL = 500
 // connected device value
 var connectDevice = null
 
-// discnnect process
+// disconnect process
 function disconnect () {
   if (!connectDevice || !connectDevice.gatt.connected) return
   connectDevice.gatt.disconnect()
@@ -74,7 +74,7 @@ function setPeriod (service, charUUID) {
     })
 }
 
-// start Compass event
+// start service event
 function startService (service, charUUID) {
   service.getCharacteristic(charUUID)
     .then(characteristic => {
