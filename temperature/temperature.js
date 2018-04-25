@@ -1,22 +1,18 @@
 /* define Parameters **************************************************/
-// BLEデバイス名接頭句
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
-// 温度センサーサービス
 const TEMPERATURE_SERVICE_UUID = 'e95d6100-251d-470a-a062-fa1922dfa9a8'
-// 温度センサーデータ取得間隔キャラクタリスティック
 const TEMPERATURE_PERIOD_UUID = 'e95d1b25-251d-470a-a062-fa1922dfa9a8'
-// 温度センサーデータキャラクタリスティック
 const TEMPERATURE_DATA_UUID = 'e95d9250-251d-470a-a062-fa1922dfa9a8'
 // Messages
-const MSG_CONNECTED = 'BLE接続が完了しました。'
-const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
-const MSG_DISCONNECTED = 'BLE接続を切断しました。'
+const MSG_CONNECTED = 'Connected'
+const MSG_CONNECT_ERROR = 'Failed to connect'
+const MSG_DISCONNECTED = 'Disconneted'
 /**********************************************************************/
 // request connect  UUID
 const SERVICE_UUID = TEMPERATURE_SERVICE_UUID
 const CHARACTERISTIC_UUID_1 = TEMPERATURE_PERIOD_UUID
 const CHARACTERISTIC_UUID_2 = TEMPERATURE_DATA_UUID
-// コンパス読取りインターバル mS
+// read interval timer mS
 const INTERVAL = 500
 // connected device value
 var connectDevice = null
