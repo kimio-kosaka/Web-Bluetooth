@@ -97,6 +97,6 @@ function startService (service, charUUID) {
 function onTemperatureChanged (event) {
   let temperature = event.target.value.getUint8(0, true)
   // updateBearingValue(bearing)
-  console.log('Temper.:' + temperature)
+  console.log('Temperature:' + temperature)
   document.js.temperature.value = temperature
 }
