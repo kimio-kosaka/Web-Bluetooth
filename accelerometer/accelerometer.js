@@ -3,15 +3,17 @@
 const     ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
 const ACCELEROMETERDATA_CHARACTERISTIC_UUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 
+// for connection process
 const SERVICE_UUID = ACCELEROMETERSERVICE_SERVICE_UUID
 const CHARACTERISTIC_UUID = ACCELEROMETERDATA_CHARACTERISTIC_UUID
-var ConnectDevice
+var connectDevice
 
 // discnnect process
 function disconnect () {
-  if (!ConnectDevice || !ConnectDevice.gatt.connected) return
-  ConnectDevice.gatt.disconnect()
+  if (!connectDevice || !connectDevice.gatt.connected) return
+  connectDevice.gatt.disconnect()
   alert('BLE接続を切断しました。')
+  // post disconnect process
   document.js.x.value = ''
   document.js.y.value = ''
   document.js.z.value = ''
@@ -26,7 +28,7 @@ function connect () {
     optionalServices: [SERVICE_UUID]
   })
     .then(device => {
-      ConnectDevice = device
+      connectDevice = device
       console.log('device', device)
       return device.gatt.connect()
     })
@@ -34,7 +36,8 @@ function connect () {
       console.log('server', server)
       server.getPrimaryService(SERVICE_UUID)
         .then(service => {
-          startService(service, CHARACTERISTIC_UUID) // start Accelerometer
+          // start service is here
+          startService(service, CHARACTERISTIC_UUID) // start service
         })
     })
     .catch(error => {
@@ -60,6 +63,7 @@ function startService (service, charUUID) {
     })
 }
 
+// event handler
 function onAccelerometerValueChanged (event) {
   var AcceleratorX = event.target.value.getUint16(0) / 1000.0
   console.log('x:' + AcceleratorX)
