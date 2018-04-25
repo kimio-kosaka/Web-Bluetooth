@@ -54,7 +54,7 @@ function connect () {
       server.getPrimaryService(SERVICE_UUID)
         .then(service => {
           // start service is here
-          setPeriod(service, CHARACTERISTIC_UUID_1) // set interbval timer
+          setPeriod(service, CHARACTERISTIC_UUID_1) // set interval timer
           startService(service, CHARACTERISTIC_UUID_2) // start commpass
         })
     })
