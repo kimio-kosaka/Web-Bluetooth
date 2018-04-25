@@ -1,4 +1,5 @@
-/* define Parameters */
+/* define Parameters **************************************************************/
+// BLEデバイス名接頭句
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 // micro:bit BLE Accelerometer UUID
 const     ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
@@ -8,10 +9,11 @@ const ACCELEROMETERDATA_CHARACTERISTIC_UUID = 'e95dca4b-251d-470a-a062-fa1922dfa
 const MSG_CONNECTED = 'BLE接続が完了しました。'
 const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
 const MSG_DISCONNECTED = 'BLE接続を切断しました。'
-
+/*********************************************************************************/
 // for connection process
 const SERVICE_UUID = ACCELEROMETERSERVICE_SERVICE_UUID
 const CHARACTERISTIC_UUID = ACCELEROMETERDATA_CHARACTERISTIC_UUID
+// connected device value
 var connectDevice
 
 // discnnect process
