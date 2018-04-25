@@ -1,24 +1,19 @@
 /* define Parameters **************************************************/
-// BLEデバイス名接頭句
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
-// 磁気センサーサービス
 const MAGNETOMETER_SERVICE_UUID = 'e95df2d8-251d-470a-a062-fa1922dfa9a8'
-// 磁気センサーキャラクタリスティック
 const    MAGNETOMETER_DATA_UUID = 'e95dfb11-251d-470a-a062-fa1922dfa9a8'
-// 磁気センサー取得間隔キャラクタリスティック
 const  MAGNETOMETER_PERIOD_UUID = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
-// 磁気センサー方位データキャラクタリスティック
 const MAGNETOMETER_COMPASS_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
 // Messages
-const MSG_CONNECTED = 'BLE接続が完了しました。'
-const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
-const MSG_DISCONNECTED = 'BLE接続を切断しました。'
+const MSG_CONNECTED = 'Connected'
+const MSG_CONNECT_ERROR = 'Failed to Connect'
+const MSG_DISCONNECTED = 'Disconnected'
 /**********************************************************************/
 // request connect  UUID
 const SERVICE_UUID = MAGNETOMETER_SERVICE_UUID
 const CHARACTERISTIC_UUID_1 = MAGNETOMETER_PERIOD_UUID
 const CHARACTERISTIC_UUID_2 = MAGNETOMETER_COMPASS_UUID
-// コンパス読取りインターバル mS
+// compass read interval mS
 const INTERVAL = 250
 // connected device value
 var connectDevice
