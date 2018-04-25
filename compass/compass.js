@@ -13,12 +13,12 @@ const SERVICE_UUID = MAGNETOMETER_SERVICE_UUID
 // コンパス読取りインターバル mS
 const INTERVAL = 250
 
-var MagnetometerDevice
+var ConnectDevice
 
 // discnnect process
 function disconnect () {
-  if (!MagnetometerDevice || !MagnetometerDevice.gatt.connected) return
-  MagnetometerDevice.gatt.disconnect()
+  if (!ConnectDevice || !ConnectDevice.gatt.connected) return
+  ConnectDevice.gatt.disconnect()
   alert('BLE接続を切断しました。')
   document.js.x.value = ''
 }
@@ -32,7 +32,7 @@ function connect () {
     optionalServices: [SERVICE_UUID]
   })
     .then(device => {
-      MagnetometerDevice = device
+      ConnectDevice = device
       console.log('device', device)
       return device.gatt.connect()
     })
