@@ -1,26 +1,38 @@
-/* define Service UUID */
-// micro:bit 磁力サービス
+/* define Parameters */
+const DEVICE_NAME_PREFIX = 'BBC micro:bit'
+// micro:bit 磁気センサーサービス
 const MAGNETOMETER_SERVICE_UUID = 'e95df2d8-251d-470a-a062-fa1922dfa9a8'
-// micro:bit 磁力データキャラクタリスティック
-const MAGNETOMETER_DATA_UUID = 'e95dfb11-251d-470a-a062-fa1922dfa9a8'
-// micro:bit 磁力取得間隔キャラクタリスティック
-const MAGNETOMETER_PERIOD_UUID = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
-// micro:bit 方角データキャラクタリスティック
+// micro:bit 磁気センサーキャラクタリスティック
+const    MAGNETOMETER_DATA_UUID = 'e95dfb11-251d-470a-a062-fa1922dfa9a8'
+// micro:bit 磁気センサー取得間隔キャラクタリスティック
+const  MAGNETOMETER_PERIOD_UUID = 'e95d386c-251d-470a-a062-fa1922dfa9a8'
+// micro:bit 磁気センサー方角データキャラクタリスティック
 const MAGNETOMETER_COMPASS_UUID = 'e95d9715-251d-470a-a062-fa1922dfa9a8'
 
-// request connect service UUID
+// Messages
+const MSG_CONNECTED = 'BLE接続が完了しました。'
+const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
+const MSG_DISCONNECTED = 'BLE接続を切断しました。'
+
+// request connect  UUID
 const SERVICE_UUID = MAGNETOMETER_SERVICE_UUID
+const CHARACTERISTIC_UUID_1 = MAGNETOMETER_PERIOD_UUID
+const CHARACTERISTIC_UUID_2 = MAGNETOMETER_COMPASS_UUID
 // コンパス読取りインターバル mS
 const INTERVAL = 250
-
-var ConnectDevice
+// connected device value
+var connectDevice
 
 // discnnect process
 function disconnect () {
-  if (!ConnectDevice || !ConnectDevice.gatt.connected) return
-  ConnectDevice.gatt.disconnect()
-  alert('BLE接続を切断しました。')
-  // post disconnect process is here
+  if (!connectDevice || !connectDevice.gatt.connected) return
+  connectDevice.gatt.disconnect()
+  alert(MSG_DISCONNECTED)
+  postDisconnect()
+}
+
+// post disconnect process is here
+function postDisconnect () {
   document.js.compass.value = ''
 }
 
@@ -28,12 +40,12 @@ function disconnect () {
 function connect () {
   navigator.bluetooth.requestDevice({
     filters: [{
-      namePrefix: 'BBC micro:bit'
+      namePrefix: DEVICE_NAME_PREFIX
     }],
     optionalServices: [SERVICE_UUID]
   })
     .then(device => {
-      ConnectDevice = device
+      connectDevice = device
       console.log('device', device)
       return device.gatt.connect()
     })
@@ -42,48 +54,48 @@ function connect () {
       server.getPrimaryService(SERVICE_UUID)
         .then(service => {
           // start service is here
-          setPeriod(service) // set interbval timer
-          startCompass(service) // start commpass
+          setPeriod(service, CHARACTERISTIC_UUID_1) // set interbval timer
+          startService(service, CHARACTERISTIC_UUID_2) // start commpass
         })
     })
     .catch(error => {
-      alert('BLE接続に失敗しました。もう一度試してみてください')
       console.log(error)
+      alert(MSG_CONNECT_ERROR)
     })
 }
 
-// set interval time
-function setPeriod (service) {
-  service.getCharacteristic(MAGNETOMETER_PERIOD_UUID)
+// set interval timer
+function setPeriod (service, charUUID) {
+  service.getCharacteristic(charUUID)
     .then(characteristic => {
       characteristic.writeValue(new Uint16Array([INTERVAL]))
-        .catch(error => {
-          console.log(error)
-        })
     })
     .catch(error => {
       console.log(error)
+      alert(MSG_CONNECT_ERROR)
     })
 }
 
-// start Compass
-function startCompass (service) {
-  service.getCharacteristic(MAGNETOMETER_COMPASS_UUID)
+// start Compass event
+function startService (service, charUUID) {
+  service.getCharacteristic(charUUID)
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
-          console.log('Compass:', char)
-          alert('BLE接続が完了しました。')
+          alert(MSG_CONNECTED)
           characteristic.addEventListener('characteristicvaluechanged',
+            // event is here
             onCompassChanged)
+          console.log('Compass:', char)
         })
     })
     .catch(error => {
       console.log(error)
+      alert(MSG_CONNECT_ERROR)
     })
 }
 
-// get and put Compass data
+// event handler
 function onCompassChanged (event) {
   let bearing = event.target.value.getUint16(0, true)
   // updateBearingValue(bearing)

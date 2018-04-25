@@ -1,3 +1,4 @@
+/* define Parameters */
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 // micro:bit BLE Accelerometer UUID
 const     ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
