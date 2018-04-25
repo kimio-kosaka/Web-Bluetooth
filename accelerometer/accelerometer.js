@@ -3,7 +3,7 @@ const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 const     ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
 const ACCELEROMETERDATA_CHARACTERISTIC_UUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 
-// Massages
+// Messages
 const CONNECTED = 'BLE接続が完了しました。'
 const CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
 const DISCONNECTED = 'BLE接続を切断しました。'
