@@ -41,8 +41,8 @@ function connect () {
         })
     })
     .catch(error => {
-      alert('BLE接続に失敗しました。もう一度試してみてください')
       console.log(error)
+      alert('BLE接続に失敗しました。もう一度試してみてください')
     })
 }
 
@@ -60,6 +60,7 @@ function startService (service, charUUID) {
     })
     .catch(error => {
       console.log(error)
+      alert('BLE接続に失敗しました。もう一度試してみてください')
     })
 }
 
