@@ -121,7 +121,7 @@ function onButtonAChanged (event) {
   let status = event.target.value.getUint8(0, true)
   // updateBearingValue(bearing)
   console.log('Status:' + status)
-  document.js.compass.value = sutatus
+  document.js.compass.value = status
 }
 function onButtonBChanged (event) {
   let status = event.target.value.getUint8(0, true)
