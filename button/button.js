@@ -35,7 +35,8 @@ function disconnect () {
 
 // post disconnect process is here
 function postDisconnect () {
-  document.js.compass.value = ''
+  document.js.buttonA.value = ''
+  document.js.buttonB.value = ''
 }
 
 // connect process
@@ -84,7 +85,7 @@ function startServiceA (service, charUUID) {
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
-          alert(MSG_CONNECTED+'ButtonA')
+          // alert(MSG_CONNECTED)
           characteristic.addEventListener('characteristicvaluechanged',
             // event is here
             onButtonAChanged)
@@ -102,7 +103,7 @@ function startServiceB (service, charUUID) {
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
-          alert(MSG_CONNECTED+'ButtonB')
+          alert(MSG_CONNECTED)
           characteristic.addEventListener('characteristicvaluechanged',
             // event is here
             onButtonBChanged)
