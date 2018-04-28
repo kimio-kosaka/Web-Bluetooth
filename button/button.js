@@ -105,7 +105,7 @@ function startServiceB (service, charUUID) {
           alert(MSG_CONNECTED)
           characteristic.addEventListener('characteristicvaluechanged',
             // event is here
-            onButtonBAhanged)
+            onButtonBChanged)
           console.log('Button:', char)
         })
     })
