@@ -84,7 +84,7 @@ function startServiceA (service, charUUID) {
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
-          alert(MSG_CONNECTED)
+          alert(MSG_CONNECTED+'ButtonA')
           characteristic.addEventListener('characteristicvaluechanged',
             // event is here
             onButtonAChanged)
@@ -102,7 +102,7 @@ function startServiceB (service, charUUID) {
     .then(characteristic => {
       characteristic.startNotifications()
         .then(char => {
-          alert(MSG_CONNECTED)
+          alert(MSG_CONNECTED+'ButtonB')
           characteristic.addEventListener('characteristicvaluechanged',
             // event is here
             onButtonBChanged)
@@ -118,14 +118,21 @@ function startServiceB (service, charUUID) {
 
 // event handler
 function onButtonAChanged (event) {
-  let status = event.target.value.getUint8(0, true)
+  var status = 'OFF'
+  let swd = event.target.value.getUint8(0, true)
   // updateBearingValue(bearing)
-  console.log('Status:' + status)
-  document.js.compass.value = status
+  if (swd === 1) status = 'ON'
+  else status = 'OFF'
+  console.log('ButtonA:' + status)
+  document.js.buttonA.value = status
 }
+
 function onButtonBChanged (event) {
-  let status = event.target.value.getUint8(0, true)
+  var status = 'OFF'
+  let swd = event.target.value.getUint8(0, true)
   // updateBearingValue(bearing)
-  console.log('Status:' + status)
-  document.js.compass.value = status
+  if (swd === 1) status = 'ON'
+  else status = 'OFF'
+  console.log('ButtonB:' + status)
+  document.js.buttonB.value = status
 }
